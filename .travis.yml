@@ -5,7 +5,7 @@ services:
 
 before_install:
  - docker build -t olliedarby/react-test -f ./client/Dockerfile.dev ./client
-  - export YARN_GPG=no
+ - export YARN_GPG=no
 
 script:
   - docker run -e CI=true olliedarby/react-test npm test
