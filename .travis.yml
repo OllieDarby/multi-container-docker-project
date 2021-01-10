@@ -15,7 +15,7 @@ after_success:
   - docker build -t oliverdarby/multi-server ./server
   - docker build -t oliverdarby/multi-worker ./worker
   # Docker login
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD" docker.io
   - docker push oliverdarby/multi-client ./client
   - docker push oliverdarby/multi-nginx ./nginx
   - docker push oliverdarby/multi-server ./server
