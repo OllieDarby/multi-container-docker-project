@@ -14,7 +14,7 @@ after_success:
   - docker build -t oliverdarby/multi-nginx ./nginx
   - docker build -t oliverdarby/multi-server ./server
   - docker build -t oliverdarby/multi-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - if [ ! -z "$(DOCKER_USERNAME)" ]; then echo $(DOCKER_PASSWORD) | docker login --username $(DOCKER_USERNAME) --password-stdin || true; fi
   - docker push oliverdarby/multi-client ./client
   - docker push oliverdarby/multi-nginx ./nginx
   - docker push oliverdarby/multi-server ./server
