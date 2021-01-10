@@ -5,7 +5,6 @@ services:
 
 before_install:
  - docker build -t oliverdarby/react-test -f ./client/Dockerfile.dev ./client
- - export YARN_GPG=no
 
 script:
   - docker run -e CI=true oliverdarby/react-test npm test
@@ -15,7 +14,7 @@ after_success:
   - docker build -t oliverdarby/multi-nginx ./nginx
   - docker build -t oliverdarby/multi-server ./server
   - docker build -t oliverdarby/multi-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
   - docker push oliverdarby/multi-client ./client
   - docker push oliverdarby/multi-nginx ./nginx
   - docker push oliverdarby/multi-server ./server
