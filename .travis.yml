@@ -1,0 +1,24 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+ - docker build -t olliedarby/react-test -f ./client/Dockerfile.dev ./client
+  - export YARN_GPG=no
+
+script:
+  - docker run -e CI=true olliedarby/react-test npm test
+
+after_success:
+  - docker build -t olliedarby/multi-client ./client
+  - docker build -t olliedarby/multi-nginx ./nginx
+  - docker build -t olliedarby/multi-server ./server
+  - docker build -t olliedarby/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push olliedarby/multi-client ./client
+  - docker push olliedarby/multi-nginx ./nginx
+  - docker push olliedarby/multi-server ./server
+  - docker push olliedarby/multi-worker ./worker
+
+
