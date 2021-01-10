@@ -15,7 +15,9 @@ after_success:
   - docker build -t oliverdarby/multi-nginx ./nginx
   - docker build -t oliverdarby/multi-server ./server
   - docker build -t oliverdarby/multi-worker ./worker
+  # log in to docker cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push images to docker hub
   - docker push oliverdarby/multi-client ./client
   - docker push oliverdarby/multi-nginx ./nginx
   - docker push oliverdarby/multi-server ./server
